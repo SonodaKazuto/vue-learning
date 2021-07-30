@@ -5,8 +5,21 @@
     <title>vue-learning</title>
 </head>
 <body>
-
+    <div id="app">
+        {{ message }}
+    </div>
 </body>
 </html>
 
-<script src="https://unpkg.com/vue@next"></script>
+<script src="https://unpkg.com/vue@next">
+    const vm = Vue.createApp({
+        data () {
+            return {
+                message: 'Hello Vue 3.0!'
+            }
+        }
+    });
+
+    // mount
+    vm.mount('#app');
+</script>
