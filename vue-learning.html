@@ -8,6 +8,9 @@
     <div id="app">
         {{ message }}
     </div>
+    <div id="app1">
+        {{ name }}
+    </div>
 </body>
 </html>
 
@@ -24,5 +27,14 @@
 
     // mount
     vm.mount('#app');
+
+    const vm1 = Vue.createApp({
+        data () {
+            return {
+                name: '008JS'
+            }
+        }
+    });
+    vm1.mount('#app1');
 </script>
 
