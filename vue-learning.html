@@ -11,6 +11,11 @@
     <div id="app1">
         {{ name }}
     </div>
+    <div id="app2">
+        price : {{ price }},
+        quantity : {{ quantity }},
+        total is {{ price * quantity }} dollars
+    </div>
 </body>
 </html>
 
@@ -36,5 +41,15 @@
         }
     });
     vm1.mount('#app1');
+
+    const vm2 = Vue.createApp({
+        data () {
+            return {
+                price: 100,
+                quantity: 10
+            }
+        }
+    });
+    vm2.mount('#app2');
 </script>
 
