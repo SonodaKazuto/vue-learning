@@ -15,15 +15,15 @@
 
 <script>
     const vm = Vue.createApp({
-        template: '<div>total is {{ subtotal() }}</div>',
+        template: '<div>total is {{ subtotal }}</div>',
         data () {
             return {
                 price: 100,
                 quantity: 10
             }
         },
-        methods: {
-            subtotal(){
+        computed: {
+            subtotal (){
                 return this.price * this.quantity;
             }
         }
