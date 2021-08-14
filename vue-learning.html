@@ -13,10 +13,10 @@
 
 <script>
     const vm = Vue.createApp({
-        template: '<div><p v-bind:id="customId">"MDFK"</p></div>',
+        template: '<div><button v-bind:disabled="isBtnDisable">click me!</button></div>',
         data () {
             return {
-                customId: 'item-id-1'
+                isBtnDisable: true
             }
         }
     });
