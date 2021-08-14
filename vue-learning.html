@@ -5,9 +5,7 @@
     <title>vue-learning</title>
 </head>
 <body>
-    <div id="app">
-        {{ message }}
-    </div>
+    <div id="app"></div>
 </body>
 </html>
 
@@ -15,16 +13,10 @@
 
 <script>
     const vm = Vue.createApp({
-        template: '<div>total is {{ subtotal }}</div>',
+        template: '<div><p id="{{ customId }}">"MDFK"</p></div>',
         data () {
             return {
-                price: 100,
-                quantity: 10
-            }
-        },
-        computed: {
-            subtotal (){
-                return this.price * this.quantity;
+                customId: 'item-id-1'
             }
         }
     });
