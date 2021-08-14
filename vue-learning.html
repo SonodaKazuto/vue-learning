@@ -13,7 +13,7 @@
 
 <script>
     const vm = Vue.createApp({
-        template: '<div><p id="{{ customId }}">"MDFK"</p></div>',
+        template: '<div><p v-bind:id="customId">"MDFK"</p></div>',
         data () {
             return {
                 customId: 'item-id-1'
