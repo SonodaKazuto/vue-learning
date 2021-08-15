@@ -6,8 +6,16 @@
 </head>
 <body>
     <div id="app">
-        <p><span>Multiline message is:</span> {{ message }}</p>
-        <textarea v-model="message" placeholder="add multiple lines"></textarea>
+        <div>
+            <input type="radio" id="one" value="1" v-model="picked">
+            <label for="one">One</label>
+        </div>
+        <div>
+            <input type="radio" id="two" value="2" v-model="picked">
+            <label for="two">Two</label>
+        </div>
+
+        <span>Picked: {{ picked }}</span>
     </div>
 </body>
 </html>
@@ -18,7 +26,7 @@
     const vm = Vue.createApp({
         data () {
             return {
-                message: 'hello'
+                picked: 1
             }
         }
     });
