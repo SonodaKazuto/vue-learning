@@ -6,16 +6,8 @@
 </head>
 <body>
     <div id="app">
-        <div>
-            <input type="radio" id="one" value="1" v-model="picked">
-            <label for="one">One</label>
-        </div>
-        <div>
-            <input type="radio" id="two" value="2" v-model="picked">
-            <label for="two">Two</label>
-        </div>
-
-        <span>Picked: {{ picked }}</span>
+        <p><span>text: </span> {{ message }}</p>
+        <textarea v-model.lazy="message" placeholder="text"></textarea>
     </div>
 </body>
 </html>
@@ -26,7 +18,7 @@
     const vm = Vue.createApp({
         data () {
             return {
-                picked: 1
+                message: hello
             }
         }
     });
