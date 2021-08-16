@@ -9,21 +9,21 @@
         <p><span>text: </span> {{ message }}</p>
         <textarea v-model.lazy="message" placeholder="text"></textarea>
     </div>
+    <script src="https://unpkg.com/vue@next"></script>
+
+    <script>
+        const vm = Vue.createApp({
+            data () {
+                return {
+                    message: "hello"
+                }
+            }
+        });
+
+        // mount
+        vm.mount('#app');
+    </script>
 </body>
 </html>
 
-<script src="https://unpkg.com/vue@next"></script>
-
-<script>
-    const vm = Vue.createApp({
-        data () {
-            return {
-                message: hello
-            }
-        }
-    });
-
-    // mount
-    vm.mount('#app');
-</script>
 
