@@ -6,8 +6,9 @@
 </head>
 <body>
     <div id="app">
-        <p><span>text: </span> {{ message }}</p>
-        <textarea v-model.lazy="message" placeholder="text"></textarea>
+        <p>{{ sum }}</p>
+        <input v-model.number="num1"></input>
+        <input v-model.number="num2"></input>
     </div>
     <script src="https://unpkg.com/vue@next"></script>
 
@@ -15,7 +16,13 @@
         const vm = Vue.createApp({
             data () {
                 return {
-                    message: "hello"
+                    num1: 0,
+                    num2: 0
+                }
+            },
+            computed: {
+                sum () {
+                    return this.num1 + this.num2;
                 }
             }
         });
