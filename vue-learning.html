@@ -6,9 +6,8 @@
 </head>
 <body>
     <div id="app">
-        <p>{{ sum }}</p>
-        <input v-model.number="num1"></input>
-        <input v-model.number="num2"></input>
+        <p><span>text: </span> {{ message }}</p>
+        <textarea v-model.trim="message" placeholder="text"></textarea>
     </div>
     <script src="https://unpkg.com/vue@next"></script>
 
@@ -16,13 +15,7 @@
         const vm = Vue.createApp({
             data () {
                 return {
-                    num1: 0,
-                    num2: 0
-                }
-            },
-            computed: {
-                sum () {
-                    return this.num1 + this.num2;
+                    message: "hello"
                 }
             }
         });
