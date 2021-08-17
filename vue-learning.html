@@ -6,8 +6,8 @@
 </head>
 <body>
     <div id="app">
-        <p><span>text: </span> {{ message }}</p>
-        <textarea v-model.trim="message" placeholder="text"></textarea>
+        <p v-text="message"></p>
+        <textarea v-model="message" placeholder="text"></textarea>
     </div>
     <script src="https://unpkg.com/vue@next"></script>
 
