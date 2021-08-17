@@ -6,7 +6,8 @@
 </head>
 <body>
     <div id="app">
-        <p v-html="message"></p>
+        <p v-once>{{ message }}</p>
+        <textarea v-model="message" placeholder="text"></textarea>
     </div>
     <script src="https://unpkg.com/vue@next"></script>
 
@@ -14,7 +15,7 @@
         const vm = Vue.createApp({
             data () {
                 return {
-                    message: "<h1>hello</h1>"
+                    message: "hello"
                 }
             }
         });
