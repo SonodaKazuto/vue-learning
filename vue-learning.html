@@ -6,8 +6,8 @@
 </head>
 <body>
     <div id="app">
-        <p>{{ message }}</p>
-        <input type="text" v-model="message" placeholder="請勿超過10個字" :style="msgStyle"></input>
+        <p>Count: {{ count }}</p>
+        <button v-on:click="count++">Plus</button>
     </div>
     <script src="https://unpkg.com/vue@next"></script>
 
@@ -15,18 +15,7 @@
         const vm = Vue.createApp({
             data () {
                 return {
-                    message: "hello"
-                }
-            },
-            computed: {
-                isValid: function () {
-                    return this.message.length <= 10;
-                },
-                msgStyle: function () {
-                    return {
-                        'border': this.isValid ? '' : 'red solid 1px',
-                        'color': this.isValid ? '' : 'red'
-                    };
+                    count: 0
                 }
             }
         });
