@@ -8,6 +8,7 @@
     <div id="app">
         <p v-show="isShow">hello</p>
         <p v-if="isShow === true">show</p>
+        <p v-else-if="isShow === null">idk</p>
         <p v-else>hide</p>
     </div>
 
@@ -17,7 +18,7 @@
         const vm = Vue.createApp({
             data () {
                 return {
-                    isShow: true
+                    isShow: null
                 }
             }
         });
