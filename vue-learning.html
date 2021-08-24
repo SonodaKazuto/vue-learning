@@ -5,9 +5,8 @@
     <title>vue-learning</title>
 </head>
 <body>
-    <div id="app">
-        <p>Count: {{ count }}</p>
-        <button v-on.stop:click="plus">Plus</button>
+    <div id="app" v-show="isShow">
+        <p>show</p>
     </div>
     <script src="https://unpkg.com/vue@next"></script>
 
@@ -15,12 +14,7 @@
         const vm = Vue.createApp({
             data () {
                 return {
-                    count: 0
-                }
-            },
-            methods: {
-                plus () {
-                    this.count++;
+                    isShow: true
                 }
             }
         });
