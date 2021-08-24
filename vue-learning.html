@@ -5,9 +5,12 @@
     <title>vue-learning</title>
 </head>
 <body>
-    <div id="app" v-show="isShow">
-        <p>show</p>
+    <div id="app">
+        <p v-show="isShow">hello</p>
+        <p v-if="isShow === true">show</p>
+        <p v-else>hide</p>
     </div>
+
     <script src="https://unpkg.com/vue@next"></script>
 
     <script>
