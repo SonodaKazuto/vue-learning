@@ -6,19 +6,17 @@
 </head>
 <body>
     <div id="app">
-        <p v-show="isShow">hello</p>
-        <p v-if="isShow === true">show</p>
-        <p v-else-if="isShow === null">idk</p>
-        <p v-else>hide</p>
+        <ul>
+            <li v-for="item in arr">{{ item }}</li>
+        </ul>
     </div>
-
     <script src="https://unpkg.com/vue@next"></script>
 
     <script>
         const vm = Vue.createApp({
             data () {
                 return {
-                    isShow: null
+                    arr: ['008', 'js', 'is', 'awesome']
                 }
             }
         });
