@@ -7,7 +7,7 @@
 <body>
     <div id="app">
         <ul>
-            <li v-for="item in arr">{{ item }}</li>
+            <li v-for="(item, index) in arr">{{ index }} / {{ item }}</li>
         </ul>
     </div>
     <script src="https://unpkg.com/vue@next"></script>
