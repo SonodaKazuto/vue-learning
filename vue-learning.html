@@ -6,8 +6,17 @@
 </head>
 <body>
     <div id="app">
+        <h1>Todo</h1>
         <ul>
-            <li v-for="(item, index) in arr">{{ index }} / {{ item }}</li>
+            <li v-for="i in todoLists">
+                <label><input v-model="i.isDone" type="checkbox">{{ i.title }}</label>
+            </li>
+        </ul>
+        <h1>Done</h1>
+        <ul>
+            <li v-for="i in doneLists">
+                <label><input v-model="i.isDone" type="checkbox">{{ i.title }}</label>
+            </li>
         </ul>
     </div>
     <script src="https://unpkg.com/vue@next"></script>
@@ -16,7 +25,31 @@
         const vm = Vue.createApp({
             data () {
                 return {
-                    arr: ['008', 'js', 'is', 'awesome']
+                    lists: [
+                        {
+                            id: 'task001',
+                            title: 'option_1',
+                            isDone: false
+                        },
+                        {
+                            id: 'task002',
+                            title: 'option_2',
+                            isDone: false
+                        },
+                        {
+                            id: 'task003',
+                            title: 'option_3',
+                            isDone: false
+                        }
+                    ]
+                }
+            },
+            computed: {
+                todoLists () {
+                    return this.lists.filter( d => !d.isDone)
+                },
+                doneLists () {
+                    return this.lists.filter( d => d.isDone)
                 }
             }
         });
