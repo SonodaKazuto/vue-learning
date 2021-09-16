@@ -27,6 +27,11 @@
                 addToMessages() {
                     this.messages.push(this.msg);
                     this.msg = '';
+
+                    this.$nextTick(() => {
+                        const el = this.$el.querySelector('.messages');
+                        el.scrollTop = el.scrollHeight;
+                    });
                 }
             }
         });
