@@ -6,50 +6,27 @@
 </head>
 <body>
     <div id="app">
-        <h1>Todo</h1>
-        <ul>
-            <li v-for="i in todoLists" :key="i.id">
-                <label><input v-model="i.isDone" type="checkbox">{{ i.title }}</label>
-            </li>
-        </ul>
-        <h1>Done</h1>
-        <ul>
-            <li v-for="i in doneLists" :key="i.id">
-                <label><input v-model="i.isDone" type="checkbox">{{ i.title }}</label>
-            </li>
-        </ul>
+        <div class="messages">
+            <div v-for="m in messages">{{ m }}</div>
+        </div>
+
+        <input type="text" placeholder="enter any words" v-model.trim="msg" @keydown.enter="addToMessages">
     </div>
+
     <script src="https://unpkg.com/vue@next"></script>
 
     <script>
         const vm = Vue.createApp({
             data () {
                 return {
-                    lists: [
-                        {
-                            id: 'task001',
-                            title: 'option_1',
-                            isDone: false
-                        },
-                        {
-                            id: 'task002',
-                            title: 'option_2',
-                            isDone: false
-                        },
-                        {
-                            id: 'task003',
-                            title: 'option_3',
-                            isDone: false
-                        }
-                    ]
+                    msg: '',
+                    messages: ['Hello', 'Vue.js', 'good']
                 }
             },
-            computed: {
-                todoLists () {
-                    return this.lists.filter( d => !d.isDone)
-                },
-                doneLists () {
-                    return this.lists.filter( d => d.isDone)
+            method: {
+                addToMessages() {
+                    this.messages.push(this.msg);
+                    this.msg = '';
                 }
             }
         });
