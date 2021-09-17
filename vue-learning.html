@@ -6,32 +6,19 @@
 </head>
 <body>
     <div id="app">
-        <div class="messages">
-            <div v-for="m in messages">{{ m }}</div>
-        </div>
-
-        <input type="text" placeholder="enter any words" v-model.trim="msg" @keydown.enter="addToMessages">
+        <h3>Poot Instance</h3>
+        <my-component></my-component>
+        <my-component></my-component>
     </div>
 
     <script src="https://unpkg.com/vue@next"></script>
 
     <script>
         const vm = Vue.createApp({
-            data () {
-                return {
-                    msg: '',
-                    messages: ['Hello', 'Vue.js', 'good']
-                }
-            },
-            methods: {
-                addToMessages() {
-                    this.messages.push(this.msg);
-                    this.msg = '';
+            components: {
+                'my-component': {
+                    template: '<div>Hello Vue!</div>',
 
-                    this.$nextTick(() => {
-                        const el = this.$el.querySelector('.messages');
-                        el.scrollTop = el.scrollHeight;
-                    });
                 }
             }
         });
