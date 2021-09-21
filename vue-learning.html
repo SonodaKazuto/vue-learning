@@ -5,27 +5,44 @@
     <title>vue-learning</title>
 </head>
 <body>
-    <div id="app">
-        <h3>Poot Instance</h3>
-        <my-component></my-component>
-        <my-component></my-component>
-    </div>
 
-    <script src="https://unpkg.com/vue@next"></script>
+<div id="app">
+    <!-- 這是外層元件的 msg -->
+    <h3>{{ msg }}</h3>
 
-    <script>
-        const vm = Vue.createApp({
-            components: {
-                'my-component': {
-                    template: '<div>Hello Vue!</div>',
+    <!-- 這裡的 v-bind:parent-msg 可以簡寫為 :parent-msg -->
+    <my-component v-bind:parent-msg="msg"></my-component>
+</div>
 
-                }
+
+<script src="https://unpkg.com/vue@next"></script>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                msg: '這是外層元件的 msg'
             }
-        });
+        }
+    });
 
-        // mount
-        vm.mount('#app');
-    </script>
+    app.component('my-component', {
+        template: `
+        <div class="component">
+          <div> 從 props 來的 parentMsg ==> {{ parentMsg }} </div>
+          <div> 自己的 msg ==> {{ msg }} </div>
+        </div>`,
+        props: ["parentMsg"],
+        data: () => {
+            return {
+                msg: '這是子元件的 msg'
+            }
+        }
+    });
+
+    app.mount('#app');
+</script>
+
 </body>
 </html>
 
