@@ -11,7 +11,7 @@
     <h3>{{ msg }}</h3>
 
     <!-- 這裡的 v-bind:parent-msg 可以簡寫為 :parent-msg -->
-    <my-component ></my-component>
+    <my-component :props-number="2"></my-component>
 </div>
 
 
@@ -32,7 +32,9 @@
             'propsNumber': {
                 type: Number,
                 required: true,
-                default: "123"
+                default: "125",
+                validator: value => value > 123
+
             }
         },
         data: () => {
