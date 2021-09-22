@@ -11,7 +11,7 @@
     <h3>{{ msg }}</h3>
 
     <!-- 這裡的 v-bind:parent-msg 可以簡寫為 :parent-msg -->
-    <my-component parent-msg="msg"></my-component>
+    <my-component :props-number="123"></my-component>
 </div>
 
 
@@ -27,12 +27,12 @@
     });
 
     app.component('my-component', {
-        template: `
-        <div class="component">
-          <div> 從 props 來的 parentMsg ==> {{ parentMsg }} </div>
-          <div> 自己的 msg ==> {{ msg }} </div>
-        </div>`,
-        props: ["parentMsg"],
+        template: `<div class="component">{{ propsNumber }}</div>`,
+        props: {
+            'propsNumber': {
+                type: Number
+            }
+        },
         data: () => {
             return {
                 msg: '這是子元件的 msg'
