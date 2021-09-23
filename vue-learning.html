@@ -13,7 +13,10 @@
             <li>{{ book.publishedAt }}</li>
         </ul>
 
-        <my-component v-for="book in books" :key="book.id" :book-info="book"></my-component>
+        <my-component v-for="book in books"
+                      :name="book.name"
+                      :author="book.author"
+                      :published-at="book.published-at"></my-component>
     </div>
 
 
@@ -42,17 +45,13 @@
         });
 
         app.component('my-component', {
-            props: {
-                bookInfo: {
-                    type: Object
-                }
-            },
             template: `
             <div class="child-app">
-                <div>書名: <input type="text" v-model="bookInfo.name"></div>
-                <div>作者: <input type="text" v-model="bookInfo.author"></div>
-                <div>出版日: <input type="text" v-model="bookInfo.publishedAt"></div>
+                <div>書名: <input type="text" v-model="name"></div>
+                <div>作者: <input type="text" v-model="author"></div>
+                <div>出版日: <input type="text" v-model="publishedAt"></div>
             </div>`,
+            props: ['name', 'author', 'published-at']
         });
 
         app.mount('#app');
