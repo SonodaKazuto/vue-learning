@@ -13,10 +13,7 @@
             <li>{{ book.publishedAt }}</li>
         </ul>
 
-        <my-component v-for="book in books"
-                      :name="book.name"
-                      :author="book.author"
-                      :published-at="book.published-at"></my-component>
+        <my-component v-for="book in books" v-bind="book"></my-component>
     </div>
 
 
