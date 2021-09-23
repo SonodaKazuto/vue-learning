@@ -6,46 +6,57 @@
 </head>
 <body>
 
-<div id="app">
-    <!-- 這是外層元件的 msg -->
-    <h3>{{ msg }}</h3>
+    <div id="app">
+        <ul v-for="book in books" class="book" :key="book.name">
+            <li>{{ book.name }}</li>
+            <li>{{ book.author }}</li>
+            <li>{{ book.publishedAt }}</li>
+        </ul>
 
-    <!-- 這裡的 v-bind:parent-msg 可以簡寫為 :parent-msg -->
-    <my-component :props-number="2"></my-component>
-</div>
+        <my-component v-for="book in books" :key="book.id" :book-info="book"></my-component>
+    </div>
 
 
-<script src="https://unpkg.com/vue@next"></script>
+    <script src="https://unpkg.com/vue@next"></script>
 
-<script>
-    const app = Vue.createApp({
-        data() {
-            return {
-                msg: '這是外層元件的 msg'
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    books: [
+                        {
+                            id: '001',
+                            name: 'MDFK',
+                            author: 'coco',
+                            publishedAt: '2039/11'
+                        },
+                        {
+                            id: '002',
+                            name: 'FAQ',
+                            author: 'kiryu',
+                            publishedAt: '2033/11'
+                        }
+                    ]
+                }
             }
-        }
-    });
+        });
 
-    app.component('my-component', {
-        template: `<div class="component">{{ propsNumber }}</div>`,
-        props: {
-            'propsNumber': {
-                type: Number,
-                required: true,
-                default: "125",
-                validator: value => value > 123
+        app.component('my-component', {
+            props: {
+                bookInfo: {
+                    type: Object
+                }
+            },
+            template: `
+            <div class="child-app">
+                <div>書名: <input type="text" v-model="bookInfo.name"></div>
+                <div>作者: <input type="text" v-model="bookInfo.author"></div>
+                <div>出版日: <input type="text" v-model="bookInfo.publishedAt"></div>
+            </div>`,
+        });
 
-            }
-        },
-        data: () => {
-            return {
-                msg: '這是子元件的 msg'
-            }
-        }
-    });
-
-    app.mount('#app');
-</script>
+        app.mount('#app');
+    </script>
 
 </body>
 </html>
