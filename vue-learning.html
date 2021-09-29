@@ -50,100 +50,72 @@
 <body>
 
 <div id="app">
-    <menu-component :title="menuData.name" :child="menuData.childNodes"></menu-component>
+    <ul v-for="book in books" :key="book.id">
+        <li>{{ book.id }}</li>
+        <li>{{ book.name }}</li>
+        <li>{{ book.author }}</li>
+        <li>{{ book.publishedAt }}</li>
+    </ul>
+    <my-component v-for="(book, idx) in books" :key="idx" v-bind="book" @update="updateInfo"></my-component>
 </div>
 
 
 <script src="https://unpkg.com/vue@next"></script>
 
 <script>
-    const menuData = {
-        name: '好書推薦',
-        childNodes: [{
-            name: 'Git',
-            url: null,
-            childNodes: [{
-                name: '為你自己學 Git',
-                url: 'https://www.tenlong.com.tw/products/9789864342662'
-            }]
-        },
-            {
-                name: '前端開發',
-                url: null,
-                childNodes: [{
-                    name: '金魚都能懂的 CSS 選取器',
-                    url: 'https://www.tenlong.com.tw/products/9789864344994'
-                },
-                    {
-                        name: '0 陷阱！0 誤解！8 天重新認識 JavaScript！',
-                        url: 'https://www.tenlong.com.tw/products/9789864344130'
-                    },
-                    {
-                        name: '讓 TypeScript 成為你全端開發的 ACE！',
-                        url: 'https://www.tenlong.com.tw/products/9789864344895'
-                    },
-                ]
-            },
-            {
-                name: 'IoT',
-                url: null,
-                childNodes: [{
-                    name: 'IoT沒那麼難！新手用 JavaScript 入門做自己的玩具！',
-                    url: 'https://www.tenlong.com.tw/products/9789864345328'
-                }]
-            },
-            {
-                name: 'Chatbot',
-                url: null,
-                childNodes: [{
-                    name: '人人可作卡米狗：從零打造自己的 LINE 聊天機器人',
-                    url: 'https://www.tenlong.com.tw/products/9789864342938'
-                }]
-            }
-        ]
-    };
-
     const app = Vue.createApp({
         data() {
             return {
-                menuData
+                books: [
+                    {
+                        id: '0001',
+                        name: 'dhfsdfjlsk',
+                        author: 'dfjks',
+                        publishedAt: '2013/03'
+                    },
+                    {
+                        id: '0002',
+                        name: 'fighfj',
+                        author: 'kjfsalkfj',
+                        publishedAt: '2014/11'
+                    }
+                ]
+            }
+        },
+        methods: {
+            updateInfo(val){
+                const idx = this.books.findIndex(d =>d.id === val.id);
+                this.books[idx] = val;
             }
         }
     });
 
-    app.component('menu-component', {
-        name: `menu-component`,
-        props: {
-            title: String,
-            url: String,
-            child: {
-                type: Array,
-                default: []
-            }
-        },
-        data() {
-            return {
-                isOpen: false
-            }
-        },
+    app.component('my-component', {
         template: `
-        <ul>
-          <li>
-            <template v-if="child.length > 0">
-              <h2 class="has-child"
-                :class="{ 'is-open': isOpen }"
-                @click="isOpen = !isOpen">{{ title }}</h2>
-                  <menu-component
-                    v-show="isOpen"
-                    v-for="c in child"
-                    :title="c.name"
-                    :child="c.childNodes"
-                    :url="c.url"
-                    />
-            </template>
-            <a :href="url" target="_blank" v-else>{{ title }}</a>
-          </li>
-        </ul>`
+            <div class="child-app">
+                <div>name: <input type="text" v-model="bookInfo.name"></div>
+                <div>author: <input type="text" v-model="bookInfo.author"></div>
+                <div>date: <input type="text" v-model="bookInfo.publishedAt"></div>
+            </div>`,
+        props: ['id', 'name', 'author', 'publishedAt'],
+        data(){
+            return {
+                bookInfo: {
+                    id: this.id,
+                    name: this.name,
+                    author: this.author,
+                    publishedAt: this.publishedAt
+                }
+            };
+        },
+        watch: {
+            bookInfo: {
+                deep: true,
+                handler(val){
+                    this.$emit('update, val');
+                }
+            }
+        }
     });
 
     app.mount('#app');
