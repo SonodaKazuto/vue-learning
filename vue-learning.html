@@ -50,13 +50,8 @@
 <body>
 
 <div id="app">
-    <ul v-for="book in books" :key="book.id">
-        <li>{{ book.id }}</li>
-        <li>{{ book.name }}</li>
-        <li>{{ book.author }}</li>
-        <li>{{ book.publishedAt }}</li>
-    </ul>
-    <my-component v-for="(book, idx) in books" :key="idx" v-bind="book" @update="updateInfo"></my-component>
+    <h1>{{ message }}</h1>
+    <custom-input v-model="message"></custom-input>
 </div>
 
 
@@ -66,56 +61,14 @@
     const app = Vue.createApp({
         data() {
             return {
-                books: [
-                    {
-                        id: '0001',
-                        name: 'dhfsdfjlsk',
-                        author: 'dfjks',
-                        publishedAt: '2013/03'
-                    },
-                    {
-                        id: '0002',
-                        name: 'fighfj',
-                        author: 'kjfsalkfj',
-                        publishedAt: '2014/11'
-                    }
-                ]
-            }
-        },
-        methods: {
-            updateInfo(val){
-                const idx = this.books.findIndex(d =>d.id === val.id);
-                this.books[idx] = val;
-            }
+                message: "Hello Vue!"
+            };
         }
     });
 
-    app.component('my-component', {
-        template: `
-            <div class="child-app">
-                <div>name: <input type="text" v-model="bookInfo.name"></div>
-                <div>author: <input type="text" v-model="bookInfo.author"></div>
-                <div>date: <input type="text" v-model="bookInfo.publishedAt"></div>
-            </div>`,
-        props: ['id', 'name', 'author', 'publishedAt'],
-        data(){
-            return {
-                bookInfo: {
-                    id: this.id,
-                    name: this.name,
-                    author: this.author,
-                    publishedAt: this.publishedAt
-                }
-            };
-        },
-        watch: {
-            bookInfo: {
-                deep: true,
-                handler(val){
-                    this.$emit('update', val);
-                }
-            }
-        }
+    app.component('custom-input', {
+        template: `<input :value="modelValue" @input="$emit('update:modelValue', $event.target.value)">`,
+        props: ["modelValue"]
     });
 
     app.mount('#app');
