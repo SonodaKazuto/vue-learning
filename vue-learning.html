@@ -61,14 +61,30 @@
     const app = Vue.createApp({
         data() {
             return {
-                message: "Hello Vue!"
+                message: "Hello App!"
+            };
+        },
+        provide(){
+            return {
+                provideMsg: this.msg
             };
         }
     });
 
-    app.component('custom-input', {
-        template: `<input :value="modelValue" @input="$emit('update:modelValue', $event.target.value)">`,
-        props: ["modelValue"]
+    app.component('list-component', {
+        template: `
+        <ul>
+          <li v-for="i in 3">
+            {{ i }}
+            <list-item />
+          </li>
+        </ul>`,
+        components: {
+            'list-item': {
+                inject: ['provideMsg'],
+                template: `<div>{{ provideMsg }}!</div>`
+            }
+        }
     });
 
     app.mount('#app');
