@@ -50,8 +50,8 @@
 <body>
 
 <div id="app">
-    <h1>{{ message }}</h1>
-    <custom-input v-model="message"></custom-input>
+    <button v-for="tab in tabs" :key="tab" :class="['tab-button', { active: currentTab === tab}]" @click="currentTab = tab">{{ tab }}</button>
+    <component :is="currentTabComponent"></component>
 </div>
 
 
@@ -61,32 +61,25 @@
     const app = Vue.createApp({
         data() {
             return {
-                message: "Hello App!"
+                currentTab: 'Home',
+                tabs: ['Home', 'Posts', 'Archive']
             };
         },
-        provide(){
-            return {
-                provideMsg: this.msg,
-                provideMsg2: Vue.computed(() => this.msg)
-            };
+        computed: {
+            currentTabComponent(){
+                return `tab-${ this.currentTab.toLowerCase() }`;
+            }
         }
     });
 
-    app.component('list-component', {
-        template: `
-        <ul>
-          <li v-for="i in 3">
-            {{ i }}
-            <list-item />
-          </li>
-        </ul>`,
-        components: {
-            'list-item': {
-                inject: ['provideMsg', 'provideMsg2'],
-                template: `<div>provideMsg: {{ provideMsg }}!</div>
-                           <div>provideMsg2: {{ provideMsg2.value }}!</div>`
-            }
-        }
+    app.component('tab-home', {
+        template: `<div class="demo-tab">Home component</div>`
+    });
+    app.component('tab-posts', {
+        template: `<div class="demo-tab">Post component</div>`
+    });
+    app.component('tab-archive', {
+        template: `<div class="demo-tab">Archive component</div>`
     });
 
     app.mount('#app');
