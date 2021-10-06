@@ -51,7 +51,9 @@
 
 <div id="app">
     <button v-for="tab in tabs" :key="tab" :class="['tab-button', { active: currentTab === tab}]" @click="currentTab = tab">{{ tab }}</button>
-    <component :is="currentTabComponent"></component>
+    <keep-alive>
+        <component :is="currentTabComponent"></component>
+    </keep-alive>
 </div>
 
 
@@ -73,13 +75,16 @@
     });
 
     app.component('tab-home', {
-        template: `<div class="demo-tab">Home component</div>`
+        template: `<div class="demo-tab"><input v-model="title"></div>`,
+        data: () => ({ title: 'Home componet' })
     });
     app.component('tab-posts', {
-        template: `<div class="demo-tab">Post component</div>`
+        template: `<div class="demo-tab"><input v-model="title"></div>`,
+        data: () => ({ title: 'Post componet' })
     });
     app.component('tab-archive', {
-        template: `<div class="demo-tab">Archive component</div>`
+        template: `<div class="demo-tab"><input v-model="title"></div>`,
+        data: () => ({ title: 'Archive componet' })
     });
 
     app.mount('#app');
