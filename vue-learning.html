@@ -51,7 +51,7 @@
 
 <div id="app">
     <button v-for="tab in tabs" :key="tab" :class="['tab-button', { active: currentTab === tab}]" @click="currentTab = tab">{{ tab }}</button>
-    <keep-alive :include="/tab-(home|posts)/">
+    <keep-alive :max="2" :include="/tab-(home|posts)/" >
         <component :is="currentTabComponent"></component>
     </keep-alive>
 </div>
