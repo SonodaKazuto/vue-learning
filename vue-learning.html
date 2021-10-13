@@ -8,53 +8,86 @@
 
     <style>
         #app {
-            display: block;
-            padding: 1rem;
+            font-family: sans-serif;
+            border: 1px solid #eee;
+            border-radius: 2px;
+            padding: 20px 30px;
+            margin-top: 1em;
+            margin-bottom: 40px;
+            user-select: none;
+            overflow-x: auto;
+        }
+
+        .tab-button {
+            padding: 6px 10px;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            background: #f0f0f0;
+            margin-bottom: -1px;
+            margin-right: -1px;
+        }
+
+        .tab-button:hover {
+            background: #e0e0e0;
+        }
+
+        .tab-button.active {
+            background: #e0e0e0;
+        }
+
+        .demo-tab {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        .dynamic-component-demo-posts-tab li {
+            margin-bottom: 1.5rem;
+        }
+
+        input {
+            min-width: 350px;
+            width: 90%;
+            padding: 3px 5px;
             font-size: 1rem;
         }
 
-        #app>ul>li {
-            margin-left: 0;
-        }
-
-        ul>li {
+        .inspector {
+            margin: 1.5rem 0;
             display: block;
-            margin-left: 1rem;
-            margin-bottom: 0.5rem;
-            padding: 8px;
-            background-color: #eee;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            font-family: Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace;
+            width: 94%;
+            height: 7rem;
+            overflow-y: scroll;
+            padding: 0 10px;
         }
 
-        h2.has-child {
-            cursor: pointer;
-        }
-
-        h2.has-child::before {
-            content: '+ ';
-        }
-
-        h2.has-child.is-open::before {
-            content: '- ';
-        }
-
-        a {
-            color: #333;
-            text-decoration: none;
-        }
-
-        a:hover {
-            color: red;
+        .inspector li {
+            font-size: 14px;
+            line-height: 1.33rem;
+            padding: 0;
+            list-style: none;
         }
     </style>
 </head>
 <body>
 
 <div id="app">
-    <button v-for="tab in tabs" :key="tab" :class="['tab-button', { active: currentTab === tab}]" @click="currentTab = tab">{{ tab }}</button>
-    <keep-alive :max="2" :include="/tab-(home|posts)/" >
-        <component :is="currentTabComponent"></component>
+    <button v-for="tab in tabs" :key="tab" :class="['tab-button', { active: currentTab === tab }]" @click="currentTab = tab">{{ tab }}</button>
+
+    <keep-alive>
+        <component :is="currentTabComponent" @update="notify"></component>
     </keep-alive>
+
+    <ul class="inspector">
+        <li v-for="m in msgs">{{ m }}</li>
+    </ul>
+
 </div>
+
 
 
 <script src="https://unpkg.com/vue@next"></script>
@@ -64,12 +97,18 @@
         data() {
             return {
                 currentTab: 'Home',
-                tabs: ['Home', 'Posts', 'Archive']
-            };
+                tabs: ['Home', 'Posts', 'Archive'],
+                msgs: []
+            }
         },
         computed: {
-            currentTabComponent(){
-                return `tab-${ this.currentTab.toLowerCase() }`;
+            currentTabComponent() {
+                return `tab-${this.currentTab.toLowerCase()}`;
+            }
+        },
+        methods: {
+            notify(val) {
+                this.msgs.push(val);
             }
         }
     });
@@ -77,17 +116,72 @@
     app.component('tab-home', {
         name: 'tab-home',
         template: `<div class="demo-tab"><input v-model="title"></div>`,
-        data: () => ({ title: 'Home componet' })
+        data: () => ({
+            title: 'Home component'
+        }),
+        created() {
+            this.$emit('update', `${this.$options.name} Created.`);
+        },
+        mounted() {
+            this.$emit('update', `${this.$options.name} Mounted.`);
+        },
+        unmounted() {
+            this.$emit('update', `${this.$options.name} Unmounted.`);
+        },
+        activated() {
+            this.$emit('update', `${this.$options.name} Activated.`);
+        },
+        deactivated() {
+            this.$emit('update', `${this.$options.name} Deactivated.`);
+        },
     });
+
     app.component('tab-posts', {
         name: 'tab-posts',
         template: `<div class="demo-tab"><input v-model="title"></div>`,
-        data: () => ({ title: 'Post componet' })
+        data: () => ({
+            title: 'Post component'
+        }),
+        created() {
+            this.$emit('update', `${this.$options.name} Created.`);
+        },
+        mounted() {
+            this.$emit('update', `${this.$options.name} Mounted.`);
+        },
+        unmounted() {
+            this.$emit('update', `${this.$options.name} Unmounted.`);
+        },
+        activated() {
+            this.$emit('update', `${this.$options.name} Activated.`);
+        },
+        deactivated() {
+            this.$emit('update', `${this.$options.name} Deactivated.`);
+        },
+
     });
+
     app.component('tab-archive', {
         name: 'tab-archive',
         template: `<div class="demo-tab"><input v-model="title"></div>`,
-        data: () => ({ title: 'Archive componet' })
+        data: () => ({
+            title: 'Archive component'
+        }),
+        created() {
+            this.$emit('update', `${this.$options.name} Created.`);
+        },
+        mounted() {
+            this.$emit('update', `${this.$options.name} Mounted.`);
+        },
+        unmounted() {
+            this.$emit('update', `${this.$options.name} Unmounted.`);
+        },
+        activated() {
+            this.$emit('update', `${this.$options.name} Activated.`);
+        },
+        deactivated() {
+            this.$emit('update', `${this.$options.name} Deactivated.`);
+        },
+
     });
 
     app.mount('#app');
