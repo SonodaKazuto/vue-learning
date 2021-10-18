@@ -77,7 +77,7 @@
 
 <div id="app">
     <h1>{{ msg }}</h1>
-    <custom-component>{{ msg }}</custom-component>
+    <custom-component></custom-component>
 </div>
 
 
@@ -94,7 +94,7 @@
     });
 
     app.component('custom-component', {
-        template: `<div>Hello!<div><slot></slot></div></div>`,
+        template: `<div>Hello!<div><slot>{{ msg }}</slot></div></div>`,
         data(){
             return {
                 msg: 'Child!'
