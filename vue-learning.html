@@ -76,16 +76,8 @@
 <body>
 
 <div id="app">
-    <button v-for="tab in tabs" :key="tab" :class="['tab-button', { active: currentTab === tab }]" @click="currentTab = tab">{{ tab }}</button>
-
-    <keep-alive>
-        <component :is="currentTabComponent" @update="notify"></component>
-    </keep-alive>
-
-    <ul class="inspector">
-        <li v-for="m in msgs">{{ m }}</li>
-    </ul>
-
+    <h1>{{ msg }}</h1>
+    <custom-component>{{ msg }}</custom-component>
 </div>
 
 
@@ -96,92 +88,18 @@
     const app = Vue.createApp({
         data() {
             return {
-                currentTab: 'Home',
-                tabs: ['Home', 'Posts', 'Archive'],
-                msgs: []
-            }
-        },
-        computed: {
-            currentTabComponent() {
-                return `tab-${this.currentTab.toLowerCase()}`;
-            }
-        },
-        methods: {
-            notify(val) {
-                this.msgs.push(val);
+                msg: 'Parent !'
             }
         }
     });
 
-    app.component('tab-home', {
-        name: 'tab-home',
-        template: `<div class="demo-tab"><input v-model="title"></div>`,
-        data: () => ({
-            title: 'Home component'
-        }),
-        created() {
-            this.$emit('update', `${this.$options.name} Created.`);
-        },
-        mounted() {
-            this.$emit('update', `${this.$options.name} Mounted.`);
-        },
-        unmounted() {
-            this.$emit('update', `${this.$options.name} Unmounted.`);
-        },
-        activated() {
-            this.$emit('update', `${this.$options.name} Activated.`);
-        },
-        deactivated() {
-            this.$emit('update', `${this.$options.name} Deactivated.`);
-        },
-    });
-
-    app.component('tab-posts', {
-        name: 'tab-posts',
-        template: `<div class="demo-tab"><input v-model="title"></div>`,
-        data: () => ({
-            title: 'Post component'
-        }),
-        created() {
-            this.$emit('update', `${this.$options.name} Created.`);
-        },
-        mounted() {
-            this.$emit('update', `${this.$options.name} Mounted.`);
-        },
-        unmounted() {
-            this.$emit('update', `${this.$options.name} Unmounted.`);
-        },
-        activated() {
-            this.$emit('update', `${this.$options.name} Activated.`);
-        },
-        deactivated() {
-            this.$emit('update', `${this.$options.name} Deactivated.`);
-        },
-
-    });
-
-    app.component('tab-archive', {
-        name: 'tab-archive',
-        template: `<div class="demo-tab"><input v-model="title"></div>`,
-        data: () => ({
-            title: 'Archive component'
-        }),
-        created() {
-            this.$emit('update', `${this.$options.name} Created.`);
-        },
-        mounted() {
-            this.$emit('update', `${this.$options.name} Mounted.`);
-        },
-        unmounted() {
-            this.$emit('update', `${this.$options.name} Unmounted.`);
-        },
-        activated() {
-            this.$emit('update', `${this.$options.name} Activated.`);
-        },
-        deactivated() {
-            this.$emit('update', `${this.$options.name} Deactivated.`);
-        },
-
+    app.component('custom-component', {
+        template: `<div>Hello!</div>`,
+        data(){
+            return {
+                msg: 'Child!'
+            }
+        }
     });
 
     app.mount('#app');
