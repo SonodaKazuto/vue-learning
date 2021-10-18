@@ -94,7 +94,7 @@
     });
 
     app.component('custom-component', {
-        template: `<div>Hello!</div>`,
+        template: `<div>Hello!<div><slot></slot></div></div>`,
         data(){
             return {
                 msg: 'Child!'
