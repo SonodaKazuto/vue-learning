@@ -76,8 +76,7 @@
 <body>
 
 <div id="app">
-    <h1>{{ msg }}</h1>
-    <custom-component></custom-component>
+    <light-box></light-box>
 </div>
 
 
@@ -93,11 +92,39 @@
         }
     });
 
-    app.component('custom-component', {
-        template: `<div>Hello!<div><slot>{{ msg }}</slot></div></div>`,
-        data(){
-            return {
-                msg: 'Child!'
+    app.component('light-box', {
+        template: `
+          <div class="lightbox">
+            <div class="modal-mask" :style="modalStyle">
+              <div class="modal-container" @click.self="toggleModal">
+                <div class="modal-body">
+                  <header>
+                    <slot name="header">Default Header</slot>
+                  </header>
+                  <hr>
+                  <main>
+                    <slot>Default Body</slot>
+                  </main>
+                  <hr>
+                  <footer>
+                    <slot name="footer">Default Footer</slot>
+                  </footer>
+                </div>
+              </div>
+            </div>
+            <button @click="isShow = true">Click me</button>
+          </div>`,
+        data: () => ({isShow: false}),
+        computed: {
+            modalStyle(){
+                return {
+                    'display': this.isShow ? '' : 'none'
+                };
+            }
+        },
+        methods: {
+            toggleModal(){
+                this.isShow = !this.isShow;
             }
         }
     });
