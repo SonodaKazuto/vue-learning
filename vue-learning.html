@@ -76,9 +76,12 @@
 <body>
 
 <div id="app">
+    <label v-for="opt in options">
+        <input type="radio" :value="opt" v-model="dynamic_slot_name">{{ opt }}
+    </label>
     <light-box>
-        <template #header>
-            <h2>008JS good</h2>
+        <template v-slot:[dynamic_slot_name]>
+            <h2>008JS good!</h2>
         </template>
     </light-box>
 </div>
@@ -91,7 +94,8 @@
     const app = Vue.createApp({
         data() {
             return {
-                msg: 'Parent !'
+                options: ['header', 'footer','default'],
+                dynamic_slot_name: 'header'
             }
         }
     });
