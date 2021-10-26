@@ -119,16 +119,18 @@
     app.component('light-box', {
         template: `
           <div class="lightbox">
-          <div class="modal-mask" :style="modalStyle">
-            <div class="modal-container" @click.self="toggleModal">
-              <div class="modal-body">
-                <main>
-                  <slot name="default" v-bind:hello="helloString[lang]"></slot>
-                </main>
+            <teleport to="body">
+              <div class="modal-mask" :style="modalStyle">
+                <div class="modal-container" @click.self="toggleModal">
+                  <div class="modal-body">
+                    <main>
+                      <slot name="default" v-bind:hello="helloString[lang]"></slot>
+                    </main>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <button @click="isShow = true">Click Me</button>
+              <button @click="isShow = true">Click Me</button>
+            </teleport>
           </div>`,
         props: {
             lang: {
