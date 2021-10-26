@@ -76,68 +76,92 @@
 <body>
 
 <div id="app">
-    <label v-for="opt in options">
-        <input type="radio" :value="opt" v-model="dynamic_slot_name">{{ opt }}
-    </label>
-    <light-box>
-        <template v-slot:[dynamic_slot_name]>
-            <h2>008JS good!</h2>
+    <p>
+        請選擇:
+        <select v-model="lang">
+            <option v-for="n in langOptions" :value="n.val">
+                {{ n.name }}
+            </option>
+        </select>
+    </p>
+
+    <light-box :lang="lang">
+        <template v-slot:default="{ hello }">
+            {{ langOptions.find(d => d.val === lang)['name'] }}:
+            {{ hello }}
         </template>
     </light-box>
 </div>
-
 
 
 <script src="https://unpkg.com/vue@next"></script>
 
 <script>
     const app = Vue.createApp({
-        data() {
-            return {
-                options: ['header', 'footer','default'],
-                dynamic_slot_name: 'header'
-            }
-        }
+        data: () => ({
+            langOptions: [{
+                name: '繁體中文',
+                val: 'tw'
+            },
+                {
+                    name: '日本語',
+                    val: 'jp'
+                },
+                {
+                    name: 'English',
+                    val: 'en'
+                },
+            ],
+            lang: 'tw'
+        })
     });
 
     app.component('light-box', {
         template: `
           <div class="lightbox">
-            <div class="modal-mask" :style="modalStyle">
-              <div class="modal-container" @click.self="toggleModal">
-                <div class="modal-body">
-                  <header>
-                    <slot name="header">Default Header</slot>
-                  </header>
-                  <hr>
-                  <main>
-                    <slot>Default Body</slot>
-                  </main>
-                  <hr>
-                  <footer>
-                    <slot name="footer">Default Footer</slot>
-                  </footer>
-                </div>
+          <div class="modal-mask" :style="modalStyle">
+            <div class="modal-container" @click.self="toggleModal">
+              <div class="modal-body">
+                <main>
+                  <slot name="default" v-bind:hello="helloString[lang]"></slot>
+                </main>
               </div>
             </div>
-            <button @click="isShow = true">Click me</button>
+          </div>
+          <button @click="isShow = true">Click Me</button>
           </div>`,
-        data: () => ({isShow: false}),
+        props: {
+            lang: {
+                type: String,
+                default: 'tw'
+            }
+        },
+        data: () => ({
+            helloString: {
+                'tw': '哈囉！世界！',
+                'jp': 'ハロー・ワールド!',
+                'en': 'Hello world!'
+            },
+            isShow: false
+        }),
         computed: {
-            modalStyle(){
+            modalStyle() {
                 return {
                     'display': this.isShow ? '' : 'none'
                 };
             }
         },
         methods: {
-            toggleModal(){
+            toggleModal() {
+                console.log('click')
                 this.isShow = !this.isShow;
             }
         }
     });
 
     app.mount('#app');
+
+
 </script>
 
 </body>
