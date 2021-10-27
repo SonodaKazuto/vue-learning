@@ -71,29 +71,30 @@
             padding: 0;
             list-style: none;
         }
+
+        .v-enter-active,
+        .v-leave-active {
+            transition: opacity 1s;
+        }
+
+        .v-enter-from,
+        .v-leave-to {
+            opacity: 0;
+        }
+
+        .v-enter-to,
+        .v-leave-from {
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
 
 <div id="app">
-    <p>
-        請選擇:
-        <select v-model="lang">
-            <option v-for="n in langOptions" :value="n.val">
-                {{ n.name }}
-            </option>
-        </select>
-    </p>
-
-    <light-box :lang="lang">
-        <template v-slot:default="{ hello }">
-            {{ langOptions.find(d => d.val === lang)['name'] }}:
-            {{ hello }}
-        </template>
-    </light-box>
-    <teleport to="body">
-        <h1>mdfk</h1>
-    </teleport>
+    <transition>
+        <div class="block" v-show="isShow">HELLO VUE</div>
+    </transition>
+    <button @click="isShow =! isShow">Toggle</button>
 </div>
 
 
@@ -102,66 +103,8 @@
 <script>
     const app = Vue.createApp({
         data: () => ({
-            langOptions: [{
-                name: '繁體中文',
-                val: 'tw'
-            },
-                {
-                    name: '日本語',
-                    val: 'jp'
-                },
-                {
-                    name: 'English',
-                    val: 'en'
-                },
-            ],
-            lang: 'tw'
+            isShow: true
         })
-    });
-
-    app.component('light-box', {
-        template: `
-          <div class="lightbox">
-            <teleport to="body">
-              <div class="modal-mask" :style="modalStyle">
-                <div class="modal-container" @click.self="toggleModal">
-                  <div class="modal-body">
-                    <main>
-                      <slot name="default" v-bind:hello="helloString[lang]"></slot>
-                    </main>
-                  </div>
-                </div>
-              </div>
-              <button @click="isShow = true">Click Me</button>
-            </teleport>
-          </div>`,
-        props: {
-            lang: {
-                type: String,
-                default: 'tw'
-            }
-        },
-        data: () => ({
-            helloString: {
-                'tw': '哈囉！世界！',
-                'jp': 'ハロー・ワールド!',
-                'en': 'Hello world!'
-            },
-            isShow: false
-        }),
-        computed: {
-            modalStyle() {
-                return {
-                    'display': this.isShow ? '' : 'none'
-                };
-            }
-        },
-        methods: {
-            toggleModal() {
-                console.log('click')
-                this.isShow = !this.isShow;
-            }
-        }
     });
 
     app.mount('#app');
