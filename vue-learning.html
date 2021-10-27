@@ -72,8 +72,21 @@
             list-style: none;
         }
 
-        .v-enter-active,
-        .v-leave-active {
+        .slide-enter-active,
+        .slide-leave-active {
+            transition: all .9s ease;
+        }
+
+        .slide-enter-from {
+            transform: translateX(-100%);
+        }
+
+        .slide-leave-to {
+            transform: translateX(100%);
+        }
+
+        .fade-enter-active,
+        .fade-leave-active {
             transition: opacity 1s;
         }
 
@@ -91,7 +104,11 @@
 <body>
 
 <div id="app">
-    <transition>
+    <transition name="slide">
+        <div class="block" v-show="isShow">HELLO VUE</div>
+    </transition>
+
+    <transition name="fade">
         <div class="block" v-show="isShow">HELLO VUE</div>
     </transition>
     <button @click="isShow =! isShow">Toggle</button>
